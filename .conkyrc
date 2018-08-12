@@ -1,0 +1,99 @@
+##############################################
+#  Settings
+##############################################
+background yes
+use_xft yes
+xftfont dejavusans:size=8
+xftalpha 1
+update_interval 1.0
+update_interval_on_battery 5.0
+total_run_times 0
+own_window yes
+own_window_transparent no
+own_window_argb_visual yes
+own_window_argb_value 0
+own_window_type desktop
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+minimum_size 200 200
+maximum_width 200
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+default_color cyan
+default_shade_color white
+default_outline_color white
+alignment top_right
+gap_x 10
+gap_y 20
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+times_in_seconds true
+override_utf8_locale yes
+##############################################
+#  Output
+##############################################
+TEXT
+
+### SYSTEM ###
+${font sans:bold:size=11}${color white}$alignc ${USER} / ${time %H:%M}
+${font}SYSTEM $hr${color}
+Kernel:$alignr$kernel
+Uptime:$alignr${format_time $uptime "\hh \mm"} 
+RAM:$alignr$memperc% / $mem
+Temp:$alignr${hwmon temp 1}*c
+${color grey}${hr}${color}
+$alignc${if_match ${execi 3600 checkupdates | wc -l} < 3}${color green}✔ Up-to-date${color}${else}${color red}✘ Outdated${color}${endif}
+
+### NETWORK ###
+${color white}NETWORK $hr${color}
+# Gateway:$alignr$gw_ip
+# Local IP: $alignr ${addr wlp1s0}
+# IP: $alignr${execi 3600 wget -O - https://icanhazip.com/ | tail}
+Connection Quality: $alignr ${wireless_link_qual_perc wlp1s0}%
+${color grey}${hr}${color}
+Speed: ${downspeed wlp1s0}↓ /  ${upspeed wlp1s0}↑ 
+Total: ${totaldown wlp1s0}↓ /  ${totalup wlp1s0}↑
+
+### CPU ###
+${color white}CPU $hr${color}
+Frequency:$alignr${freq_g}GHz
+Usage:$alignr${cpu cpu0}%
+$cpugraph
+
+### STORAGE ###
+${color white}STORAGE $hr${color}
+Filesystem Space:
+/$alignr${fs_used /}/${fs_size /}
+$fs_bar
+
+### MEMORY ###
+${color white}MEMORY & I/O $hr${color}
+Usage:$alignr$mem / $memfree
+$memgraph
+Disk I/O:$alignr$diskio
+$diskiograph
+
+### POWER ###
+${color white}BATTERY ${hr}${color}
+${battery BAT0}${alignr}${format_time $battery_time "\hh \mm"} 
+${battery_bar BAT0}
+
+### PROCESSES ###
+${color white}TOP PROCESSES $hr${color}
+$alignc${color grey}CPU${color}
+1. ${top name 1}$alignr${top cpu 1}%
+2. ${top name 2}$alignr${top cpu 2}%
+3. ${top name 3}$alignr${top cpu 3}%
+${color grey}${hr}${color}
+$alignc${color grey}MEMORY${color}
+1. ${top_mem name 1}$alignr${top_mem mem 1}%
+2. ${top_mem name 2}$alignr${top_mem mem 2}%
+3. ${top_mem name 3}$alignr${top_mem mem 3}%
+
+### NEWS ###
+${color white}NEWS $hr${color}
+$alignc${color grey}ARCH:${color} 
+${rss http://www.archlinux.org/feeds/news/ 3600 item_titles 3 }
