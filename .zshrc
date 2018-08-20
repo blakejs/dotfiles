@@ -118,6 +118,7 @@ alias grep="egrep --color=auto"
 alias m=more                   
 alias e=$EDITOR               
 alias se="sudoedit"
+alias npmr="npm run"
 alias mydotfiles='git --git-dir=$HOME/.my-dotfiles/ --work-tree=$HOME'
 # Previous dir with dots.
 alias .='cd ../'
