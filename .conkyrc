@@ -25,8 +25,8 @@ default_color cyan
 default_shade_color white
 default_outline_color white
 alignment top_right
-gap_x 5
-gap_y 5
+gap_x 10
+gap_y 1
 no_buffers yes
 uppercase no
 cpu_avg_samples 2
