@@ -119,6 +119,8 @@ alias m=more
 alias e=$EDITOR               
 alias se="sudoedit"
 alias npmr="npm run"
+alias hudev="hugo server -D"
+alias lg="lazygit"
 alias mydotfiles='git --git-dir=$HOME/.my-dotfiles/ --work-tree=$HOME'
 # Previous dir with dots.
 alias .='cd ../'
