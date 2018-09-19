@@ -118,12 +118,6 @@ alias grep="egrep --color=auto"
 alias m=more                   
 alias e=$EDITOR               
 alias se="sudoedit"
-alias npmr="npm run"
-alias hudev="hugo server -D"
-alias lg="lazygit"
-alias rn="ranger"
-alias n="nnn"
-alias mydotfiles='git --git-dir=$HOME/.my-dotfiles/ --work-tree=$HOME'
 # Previous dir with dots.
 alias .='cd ../'
 alias ..='cd ../../'
@@ -136,6 +130,18 @@ alias vids='~/Videos'
 alias books='~/Books'
 alias music='~/Music'
 alias dls='~/Downloads'
+# Taskbook
+alias task='tb -t'
+alias note='tb -n'
+alias done='tb -d'
+# Personal
+alias hd="hugo server -D"
+alias lg="lazygit"
+alias rn="ranger"
+alias n='nnn'
+alias mydotfiles='git --git-dir=$HOME/.my-dotfiles/ --work-tree=$HOME'
+alias npmup='npm update npm -g; npm update -g;'
+alias vpn='sudo openvpn --config ~/client.ovpn'
 
 # <========================= PACKAGE MANAGER =========================>
 
@@ -248,7 +254,7 @@ clear
 echo -e "${lightblue}";toilet -f future --rainbow "Welcome, " $USER;
 echo -ne "${lightgray}Today is:\t\t${lightgray}" `date`; echo ""
 echo -e "${lightgray}Kernel Information: \t${lightgray}" `uname -smr`
-echo -e "${nc}"; cal -3
+echo -e "${nc}"; tb
 # Auto create tmux session.
 if [[ -z "$TMUX" ]]
 then
