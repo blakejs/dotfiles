@@ -22,6 +22,7 @@ source $ZSH/oh-my-zsh.sh
 
 setopt AUTO_CD
 setopt EXTENDED_GLOB
+export NNN_SCRIPT=/home/blake/.config/fzy.sh
 export EDITOR=code
 export PAGER=less
 export PATH=~/.npm/bin:$PATH
@@ -137,11 +138,13 @@ alias done='tb -d'
 # Personal
 alias hd="hugo server -D"
 alias lg="lazygit"
-alias rn="ranger"
-alias n='nnn'
+alias n="ranger"
+alias nn='nnn -l'
 alias mydotfiles='git --git-dir=$HOME/.my-dotfiles/ --work-tree=$HOME'
-alias npmup='npm update npm -g; npm update -g;'
-alias vpn='sudo openvpn --config ~/client.ovpn'
+alias npmupdate='npm update npm -g; npm update -g;'
+alias npi='npm install'
+alias npr='npm run'
+alias vpn='sudo openvpn --config ~/.cert/client.ovpn'
 
 # <========================= PACKAGE MANAGER =========================>
 
