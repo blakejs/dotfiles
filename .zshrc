@@ -23,7 +23,7 @@ source $ZSH/oh-my-zsh.sh
 setopt AUTO_CD
 setopt EXTENDED_GLOB
 export NNN_SCRIPT=/home/blake/.config/fzy.sh
-export EDITOR=code
+export EDITOR=vim
 export PAGER=less
 export PATH=~/.npm/bin:$PATH
 stty -ixon
@@ -107,6 +107,7 @@ alias reboot='sudo reboot'
 alias -g L="| less"
 alias -g G="| grep"
 alias reload='source ~/.zshrc'
+alias home="~ && reload"
 alias zshrc="$EDITOR ~/.zshrc"
 alias ports='netstat -nape --inet'
 alias ping='ping -c 3'
@@ -257,7 +258,7 @@ clear
 echo -e "${lightblue}";toilet -f future --rainbow "Welcome, " $USER;
 echo -ne "${lightgray}Today is:\t\t${lightgray}" `date`; echo ""
 echo -e "${lightgray}Kernel Information: \t${lightgray}" `uname -smr`
-echo -e "${nc}"; tb
+echo -e "${lightblue}"; cal -3
 # Auto create tmux session.
 if [[ -z "$TMUX" ]]
 then

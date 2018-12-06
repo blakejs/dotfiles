@@ -242,3 +242,5 @@ set -g mouse on
 
 # move status line to top
 set -g status-position top
+unbind -T copy-mode MouseDragEnd1Pane
+bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"

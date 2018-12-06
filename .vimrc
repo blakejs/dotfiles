@@ -48,6 +48,12 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-fugitive'
     " Aligner
     Plug 'godlygeek/tabular'
+    " Writer
+    Plug 'reedes/vim-pencil'
+    " Goyo
+    Plug 'junegunn/goyo.vim'
+    " Limelight
+    Plug 'junegunn/limelight.vim'
 
 " WEB DEV "
     " HTML5
@@ -133,6 +139,9 @@ nnoremap <leader>gb :Git branch<Space>
 nnoremap <leader>go :Git checkout<Space>
 nnoremap <leader>gps :Dispatch! git push<CR>
 nnoremap <leader>gpl :Dispatch! git pull<CR>
+
+" goyo
+map <F4> :Goyo <bar> :Limelight!! <bar> :TogglePencil <CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 01. General                                                                "
