@@ -12,27 +12,40 @@
 # Path.
 export ZSH=/home/blake/.oh-my-zsh
 # Theme.
-ZSH_THEME="spaceship"
+ZSH_THEME="robbyrussell"
 # Plugin.
-plugins=( git npm zsh-completions )
+plugins=( git npm )
 # Enable.
 source $ZSH/oh-my-zsh.sh
 
 # <========================== GENERAL ==========================>
 
+export PATH="$HOME/bin:$PATH"
+
 setopt AUTO_CD
 setopt EXTENDED_GLOB
-export NNN_SCRIPT=/home/blake/.config/fzy.sh
-export EDITOR=vim
+export EDITOR=code
 export PAGER=less
-export PATH=~/.npm/bin:$PATH
 stty -ixon
+
+
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm
+
+NPM_PACKAGES="${HOME}/.npm-packages"
+
+export PATH="$PATH:$NPM_PACKAGES/bin"
+
+# Preserve MANPATH if you already defined it somewhere in your config.
+# Otherwise, fall back to `manpath` so we can inherit from `/etc/manpath`.
+export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
 
 # <============================= HISTORY =========================>
 
 HISTFILE=~/.history
-SAVEHIST=10000
-HISTSIZE=10000
+SAVEHIST=100000
+HISTSIZE=100000
 setopt APPEND_HISTORY
 setopt SHARE_HISTORY
 setopt HIST_IGNORE_DUPS
@@ -84,6 +97,10 @@ mktbz() { tar cvjf "${1%%/}.tar.bz2" "${1%%/}/"; }
 # List files only.
 lf () { ls -1p $@ | grep -v '\/$' }
 
+renaming() {
+  cd ~/Downloads; rename 's/\.docx$/\.gdoc/' *.docx
+}
+
 # <============================= ALIAS =============================>
 
 # Common.
@@ -103,6 +120,7 @@ alias scrott='"scrot" -d 7 -c'
 alias blank="sleep 1 && xset dpms force off"
 alias lesslast="less !:*"
 alias mine="sudo chown ro"
+alias me="chmod +x"
 alias reboot='sudo reboot'
 alias -g L="| less"
 alias -g G="| grep"
@@ -115,16 +133,15 @@ alias ns='netstat -alnp --protocol=inet'
 alias top="sudo htop d 1"
 alias ps="ps aux"
 alias today='date "+%d %h %y"'
-alias now='date "+%A, %d %B, %G%t%H:%M %Z(%z)"'
 alias grep="egrep --color=auto" 
 alias m=more                   
 alias e=$EDITOR               
 alias se="sudoedit"
 # Previous dir with dots.
-alias .='cd ../'
-alias ..='cd ../../'
-alias ...='cd ../../../'
-alias ....='cd ../../../../'
+alias ..='cd ../'
+alias ...='cd ../../'
+alias ....='cd ../../../'
+alias .....='cd ../../../../'
 # Common dirs.
 alias docs='~/Documents'
 alias pics='~/Pictures'
@@ -137,30 +154,45 @@ alias task='tb -t'
 alias note='tb -n'
 alias done='tb -d'
 # Personal
-alias hd="hugo server -D"
-alias lg="lazygit"
-alias n="ranger"
-alias nn='nnn -l'
-alias mydotfiles='git --git-dir=$HOME/.my-dotfiles/ --work-tree=$HOME'
-alias npmupdate='npm update npm -g; npm update -g;'
-alias npi='npm install'
-alias npr='npm run'
+alias g="lazygit"
+alias h="hugo server -D"
+alias n="nnn -l"
+alias dotz='git --git-dir=$HOME/.my-dotfiles/ --work-tree=$HOME'
 alias vpn='sudo openvpn --config ~/.cert/client.ovpn'
+alias ivpn='sudo openvpn --config ~/.cert/blakesutton.ovpn'
+alias ihost='sudo gedit /etc/hosts'
+
+# DDEV
+alias iwp="/home/blake/scripts/wp.sh"
+alias ds='ddev start'
+alias dq='ddev stop'
+# alias dk='sudo chmod 666 /var/run/docker.sock'
+
+# NPM
+alias nu='npm update npm -g; npm update -g;'
+alias ni='npm install'
+alias nr='npm run'
 
 # <========================= PACKAGE MANAGER =========================>
 
-# ArchLinux FTW.
-alias update='sudo pacman -Syu'
-alias clean='sudo pacman -Rsnc $(pacman -Qdqt)'
-alias paur='sudo pacman -U'
-alias pinstall='sudo pacman -S'
-alias premove='sudo pacman -Rsn'
-alias pfind='sudo pacman -Ss'
-alias pinfo='sudo pacman -Si'
-alias pwhat='sudo pkgfile --list'
-alias pshow='sudo pacman -Qdt'
-alias pby='sudo pacman -Ql'
-alias pfrom='sudo pacman -Qo'
+# # ArchLinux FTW.
+# alias update='sudo pacman -Syu'
+# alias clean='sudo pacman -Rsnc $(pacman -Qdqt)'
+# alias paur='sudo pacman -U'
+# alias pinstall='sudo pacman -S'
+# alias premove='sudo pacman -Rsn'
+# alias pfind='sudo pacman -Ss'
+# alias pinfo='sudo pacman -Si'
+# alias pwhat='sudo pkgfile --list'
+# alias pshow='sudo pacman -Qdt'
+# alias pby='sudo pacman -Ql'
+# alias pfrom='sudo pacman -Qo'
+
+# # Ubuntu
+alias apti='sudo apt-get install'
+alias aptr='sudo apt-get remove'
+alias apts='sudo apt-cache search'
+alias aptu='sudo apt-get update && sudo apt-get upgrade'
 
 # <======================= COLOR FIX ============================>
 
@@ -255,18 +287,7 @@ bindkey -M viins ' ' magic-space
 
 # Welcome msg with cal.
 clear
-echo -e "${lightblue}";toilet -f future --rainbow "Welcome, " $USER;
+echo -e "${lightblue}";toilet -f future --gay "Welcome, " $USER;
 echo -ne "${lightgray}Today is:\t\t${lightgray}" `date`; echo ""
 echo -e "${lightgray}Kernel Information: \t${lightgray}" `uname -smr`
 echo -e "${lightblue}"; cal -3
-# Auto create tmux session.
-if [[ -z "$TMUX" ]]
-then
-  ID="`tmux ls | grep -vm1 attached | cut -d: -f1`"
-  if [[ -z "$ID" ]]
-  then
-    tmux new-session
-  else
-    tmux attach-session -t "$ID"
-  fi
-fi
